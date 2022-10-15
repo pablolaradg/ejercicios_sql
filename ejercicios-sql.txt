@@ -1,0 +1,218 @@
+
+Ejemplos:
+
+¿Qué nombres tienen el saldo máximo?
+
+SELECT nombre
+FROM Usuarios
+WHERE saldo = (SELECT MAX(saldo) FROM Usuarios);
+
+Calcular el saldo máximo de los usuarios de sexo “Mujer”
+
+SELECT MAX(saldo)
+FROM Usuarios
+WHERE sexo = 'M';
+
+Listar nombre y teléfono de los usuarios con teléfono NOKIA, BLACKBERRY o SONY
+
+SELECT nombre, telefono
+FROM Usuarios
+WHERE marca = 'NOKIA' OR marca = 'BLACKBERRY' OR marca = 'SONY' ;
+
+Contar los usuarios sin saldo o inactivos
+
+SELECT COUNT(*) FROM Usuarios
+WHERE activo = false;
+
+Listar el login de los usuarios con nivel 1, 2 o 3
+
+SELECT nombre, activo
+FROM Usuarios
+WHERE nivel = '1' OR nivel = '2' OR nivel = '3' ;
+
+Listar los números de teléfono con saldo menor o igual a 300
+
+SELECT telefono
+FROM Usuarios
+WHERE saldo <= 300
+
+Calcular la suma de los saldos de los usuarios de la compañía telefónica NEXTEL
+
+SELECT SUM(saldo)
+FROM Usuarios
+WHERE compania = "NEXTEL";
+
+Contar el número de usuarios por compañía telefónica
+
+Select compania,
+count(*)
+As Conteo_Usuarios
+From Usuarios
+Group By compania
+
+Contar el número de usuarios por nivel
+
+Select nivel,
+count(*)
+As Conteo_Usuarios
+From Usuarios
+Group By nivel
+
+Listar el login de los usuarios con nivel 2
+
+Select usuario, activo
+From Usuarios
+WHERE nivel = 2;
+
+Mostrar el email de los usuarios que usan gmail
+
+Select usuario, email
+From Usuarios
+WHERE email LIKE "%gmail.com";
+
+Listar nombre y teléfono de los usuarios con teléfono LG, SAMSUNG o MOTOROLA
+
+SELECT nombre, telefono
+FROM Usuarios
+WHERE marca = 'LG' OR marca = 'SAMSUNG' OR marca = 'MOTOROLA' ;
+
+Listar nombre y teléfono de los usuarios con teléfono que no sea de la marca LG o SAMSUNG
+
+SELECT nombre, telefono
+FROM Usuarios
+WHERE NOT marca='IUSACELL';
+
+Calcular el saldo promedio de los usuarios que tienen teléfono marca NOKIA
+
+SELECT 
+AVG(saldo)
+FROM Usuarios
+WHERE marca='NOKIA';
+
+Listar el login y teléfono de los usuarios con compañía telefónica IUSACELL o AXEL
+
+SELECT nombre, activo, telefono
+FROM Usuarios
+WHERE compania = "AXEL" OR compania = "IUSACELL";
+
+Mostrar el email de los usuarios que no usan yahoo
+
+SELECT usuario, email
+FROM Usuarios
+WHERE NOT email LIKE "%yahoo%";
+
+Listar las diferentes marcas de celular en orden alfabético descendentemente
+
+SELECT marca
+FROM Usuarios
+GROUP BY marca
+ORDER BY marca DESC;
+
+Listar las diferentes compañías en orden alfabético aleatorio
+
+SELECT compania
+FROM Usuarios
+GROUP BY compania
+ORDER BY RAND ();
+
+Listar nombre y teléfono de los usuarios con teléfono que no sea de la marca BLACKBERRY
+
+SELECT nombre, telefono
+FROM Usuarios
+WHERE NOT marca="BLACKBERRY";
+
+Contar el número de usuarios por sexo
+
+SELECT sexo,
+COUNT(*)
+AS Usuarios_por_sexo
+FROM Usuarios
+GROUP BY sexo
+
+Listar los números de teléfono sin saldo
+
+SELECT telefono
+FROM Usuarios
+WHERE saldo <= 0;
+
+Calcular el saldo mínimo de los usuarios de sexo “Hombre”
+
+SELECT MIN(saldo)
+FROM Usuarios
+WHERE sexo = 'H';
+
+Listar los números de teléfono con saldo mayor a 300
+
+SELECT telefono
+FROM Usuarios
+WHERE saldo > 300;
+
+Contar el número de usuarios por marca de teléfono
+
+SELECT marca,
+COUNT(*)
+AS Usuarios_por_marca
+FROM Usuarios
+GROUP BY marca;
+
+Calcular la suma de los saldos de los usuarios de la compañía telefónica UNEFON
+
+SELECT SUM(saldo)
+FROM Usuarios
+WHERE compania = "UNEFON";
+
+Mostrar el email de los usuarios que usan hotmail
+
+SELECT usuario, email
+FROM Usuarios
+WHERE email LIKE "%hotmail%";
+
+Listar los nombres de los usuarios sin saldo o inactivos
+
+SELECT nombre
+FROM Usuarios
+WHERE saldo = 0 OR activo = FALSE;
+
+Calcular la suma de los saldos de los usuarios de la compañía telefónica TELCEL
+
+SELECT SUM(saldo)
+FROM Usuarios
+WHERE compania = "TELCEL";
+
+
+Ejercicios con JOIN
+
+¿Qué provincias no tenemos clientes?
+
+# Provincias que no tienen clientes
+SELECT p.codigo,p.nombre FROM provincias AS p
+  LEFT JOIN clientes AS c
+  ON c.codigoProvincia=p.codigo
+  WHERE c.codigoprovincia IS null;
+
+¿Qué provincias tienen clientes? Pero sin repetir el nombre de la provincia. Un tip, vas a necesitar la sentencia distinct
+
+# Provincias que no tienen clientes
+SELECT DISTINCT
+  p.codigo,p.nombre FROM provincias AS p
+  LEFT JOIN clientes AS c
+  ON c.codigoProvincia=p.codigo;
+
+
+Buscar las fotos de cada libro:
+
+SELECT * FROM biblioteca.libro AS L
+INNER JOIN biblioteca.fotos AS F ON L.id = F.libro_id;
+
+
+Buscar todos los libros, los que tengan fotos y los que no tengan foto.
+
+SELECT * FROM biblioteca.libro AS L
+LEFT JOIN biblioteca.fotos AS F ON L.id = F.libro_id;
+
+
+Mismo caso, pero seleccionando solo ver el titulo del libro y nombre de la foto
+
+SELECT L.titulo, F.nombre FROM biblioteca.libro AS L
+LEFT JOIN biblioteca.fotos AS F ON L.id = F.libro_id;
+
